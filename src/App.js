@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import './App.css';
 
 class App extends Component {
   render() {
     return (
       <div>
-        2048 Game
+        <div className="header">
+          2048 Game
+        </div>
       </div>
     );
   }
