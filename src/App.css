@@ -4,3 +4,20 @@
     background-color: #818181;
     color: #ffffff;
 }
+.playground {
+    display: grid;
+    grid-template-columns: 60px 60px 60px 60px;
+    grid-template-rows: 60px 60px 60px 60px;
+    text-align: center;
+    grid-gap: 5px;
+    align-items: center;
+    justify-content: center;
+    border: 10px solid white;
+}
+.playground > span {
+    background-color: #dfdfdf;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
