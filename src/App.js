@@ -31,10 +31,18 @@ class App extends Component {
     }
   };
 
+  mutateGameState = (i, j, value) => {
+    const currentGameState = this.state.gameState;
+    currentGameState[i][j] = value;
+    this.setState({
+      gameState: currentGameState
+    })
+  };
+
   componentDidMount() {
     window.addEventListener('keydown', this.handleMotion);
-    const randomI = this.getRandomInt(4);
-    const randomJ = this.getRandomInt(4);
+    this.mutateGameState(this.getRandomInt(4), this.getRandomInt(4), 2);
+    this.mutateGameState(this.getRandomInt(4), this.getRandomInt(4), 2);
   }
 
   render() {
