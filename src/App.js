@@ -3,6 +3,15 @@ import './App.css';
 
 class App extends Component {
 
+  state = {
+    gameState: [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0]
+    ]
+  };
+
   handleMotion = (e) => {
     e.preventDefault();
     if (e.key === 'ArrowRight') {
@@ -25,28 +34,18 @@ class App extends Component {
   }
 
   render() {
+    const { gameState } = this.state;
     return (
       <div>
         <div className="header">
           2048 Game
         </div>
         <div className="playground">
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
+          {[0, 1, 2, 3].map(i => {
+            return [0, 1, 2, 3].map(j => (
+              <span key={j}>{gameState[i][j]}</span>
+            ))
+          })}
         </div>
       </div>
     );
