@@ -8,6 +8,24 @@ class App extends Component {
         <div className="header">
           2048 Game
         </div>
+        <div className="playground">
+          <span>2</span>
+          <span>2</span>
+          <span>2</span>
+          <span>2</span>
+          <span>2</span>
+          <span>2</span>
+          <span>2</span>
+          <span>2</span>
+          <span>2</span>
+          <span>2</span>
+          <span>2</span>
+          <span>2</span>
+          <span>2</span>
+          <span>2</span>
+          <span>2</span>
+          <span>2</span>
+        </div>
       </div>
     );
   }
