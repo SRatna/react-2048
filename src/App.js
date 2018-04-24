@@ -12,6 +12,8 @@ class App extends Component {
     ]
   };
 
+  getRandomInt = max => Math.floor(Math.random() * Math.floor(max));
+
   handleMotion = (e) => {
     e.preventDefault();
     if (e.key === 'ArrowRight') {
@@ -31,6 +33,8 @@ class App extends Component {
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleMotion);
+    const randomI = this.getRandomInt(4);
+    const randomJ = this.getRandomInt(4);
   }
 
   render() {
