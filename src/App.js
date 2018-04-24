@@ -43,7 +43,9 @@ class App extends Component {
         <div className="playground">
           {[0, 1, 2, 3].map(i => {
             return [0, 1, 2, 3].map(j => (
-              <span key={j}>{gameState[i][j]}</span>
+              <span key={j}>
+                {gameState[i][j] > 0 ? gameState[i][j] : ''}
+              </span>
             ))
           })}
         </div>
