@@ -96,6 +96,14 @@ class App extends Component {
     }
   };
 
+  putTwoAtTwoRandomEmptyLocations = () => {
+    this.mutateGameState(this.getRandomInt(4), this.getRandomInt(4), 2);
+    const emptyLocations = this.getEmptyLocations();
+    const randomIndex = this.getRandomInt(emptyLocations.length);
+    const randomLocation = emptyLocations[randomIndex];
+    this.mutateGameState(randomLocation.rowIndex, randomLocation.colIndex, 2);
+  };
+
   handleDownArrowClick = () => {
     const { gameState } = this.state;
     let colIndex = 0;
@@ -186,8 +194,7 @@ class App extends Component {
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleMotion);
-    this.mutateGameState(this.getRandomInt(4), this.getRandomInt(4), 2);
-    this.mutateGameState(this.getRandomInt(4), this.getRandomInt(4), 2);
+    this.putTwoAtTwoRandomEmptyLocations();
   }
 
   render() {
