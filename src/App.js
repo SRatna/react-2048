@@ -9,7 +9,8 @@ class App extends Component {
       [0, 0, 0, 0],
       [0, 0, 0, 0],
       [0, 0, 0, 0]
-    ]
+    ],
+    gameOver: false
   };
 
   getRandomInt = max => Math.floor(Math.random() * Math.floor(max));
@@ -57,7 +58,7 @@ class App extends Component {
   checkForGameOver = () => {
     if (this.getEmptyLocations().length === 0) {
       if (this.isGameOverOnRows() && this.isGameOverOnColumns()) {
-        console.log('game over');
+        this.setState({ gameOver: true });
       }
     }
   };
