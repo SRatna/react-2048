@@ -57,7 +57,7 @@ class App extends Component {
   };
 
   checkForGameOver = () => {
-    if (this.getEmptyLocations().length === 0) {
+    if (this.getEmptyLocations(this.state.gameState).length === 0) {
       if (this.isGameOverOnRows() && this.isGameOverOnColumns()) {
         this.setState({ gameOver: true });
       }
@@ -85,10 +85,12 @@ class App extends Component {
   };
 
   mutateGameState = (i, j, value) => {
-    const currentGameState = this.state.gameState;
-    currentGameState[i][j] = value;
-    this.setState({
-      gameState: currentGameState
+    this.setState(prevState => {
+      const prevGameState = prevState.gameState;
+      prevGameState[i][j] = value;
+      return {
+        gameState: prevGameState
+      };
     })
   };
 
@@ -122,8 +124,7 @@ class App extends Component {
     return reorderedArray;
   };
 
-  getEmptyLocations = () => {
-    const { gameState } = this.state;
+  getEmptyLocations = gameState => {
     const emptyLocations = [];
     let rowIndex = 0;
     while (rowIndex < 4) {
@@ -142,7 +143,7 @@ class App extends Component {
   };
 
   putTwoAtARandomEmptyLocation = () => {
-    const emptyLocations = this.getEmptyLocations();
+    const emptyLocations = this.getEmptyLocations(this.state.gameState);
     if (emptyLocations.length > 0) {
       const randomIndex = this.getRandomInt(emptyLocations.length);
       const randomLocation = emptyLocations[randomIndex];
@@ -151,11 +152,17 @@ class App extends Component {
   };
 
   putTwoAtTwoRandomEmptyLocations = () => {
-    this.mutateGameState(this.getRandomInt(4), this.getRandomInt(4), 2);
-    const emptyLocations = this.getEmptyLocations();
-    const randomIndex = this.getRandomInt(emptyLocations.length);
-    const randomLocation = emptyLocations[randomIndex];
-    this.mutateGameState(randomLocation.rowIndex, randomLocation.colIndex, 2);
+    const i1 = this.getRandomInt(4);
+    const j1 = this.getRandomInt(4);
+    let i2 = this.getRandomInt(4);
+    let j2 = this.getRandomInt(4);
+    while (true) {
+      if (i1 !== i2 && j1 !== j2) break;
+      i2 = this.getRandomInt(4);
+      j2 = this.getRandomInt(4);
+    }
+    this.mutateGameState(i1, j1, 2);
+    this.mutateGameState(i2, j2, 2);
   };
 
   handleDownArrowClick = () => {
@@ -246,6 +253,20 @@ class App extends Component {
     this.putTwoAtARandomEmptyLocation();
   };
 
+  resetGame = () => {
+    this.setState({
+      gameState: [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+      ],
+      gameOver: false,
+      gameWon: false
+    });
+    this.putTwoAtTwoRandomEmptyLocations();
+  };
+
   componentDidMount() {
     window.addEventListener('keydown', this.handleMotion);
     this.putTwoAtTwoRandomEmptyLocations();
@@ -271,7 +292,9 @@ class App extends Component {
           {gameOver && <span>Game Over</span>}
           {gameWon && <span>Game Won</span>}
           <br/>
-          <button>New Game</button>
+          <button onClick={this.resetGame}>
+            New Game
+          </button>
         </div>
       </div>
     );
