@@ -64,23 +64,45 @@ class App extends Component {
     }
   };
 
+  checkForGameWon = gameState => {
+    let rowIndex = 0;
+    let gameWon = false;
+    while (rowIndex < 4) {
+      let colIndex = 0;
+      while (colIndex < 4) {
+        if (gameState[rowIndex][colIndex] === 2048) {
+          gameWon = true;
+          break;
+        }
+        colIndex += 1;
+      }
+      if (gameWon) break;
+      rowIndex += 1;
+    }
+    if (gameWon) {
+      this.setState({
+        gameWon: true
+      });
+    }
+  };
+
   handleMotion = (e) => {
     e.preventDefault();
     if (e.key === 'ArrowRight') {
-      this.handleRightArrowClick();
       this.checkForGameOver();
+      this.handleRightArrowClick();
     }
     if (e.key === 'ArrowLeft') {
-      this.handleLeftArrowClick();
       this.checkForGameOver();
+      this.handleLeftArrowClick();
     }
     if (e.key === 'ArrowUp') {
-      this.handleUpArrowClick();
       this.checkForGameOver();
+      this.handleUpArrowClick();
     }
     if (e.key === 'ArrowDown') {
-      this.handleDownArrowClick();
       this.checkForGameOver();
+      this.handleDownArrowClick();
     }
   };
 
@@ -183,6 +205,7 @@ class App extends Component {
       }
       colIndex += 1;
     }
+    this.checkForGameWon(gameState);
     this.setState({ gameState });
     this.putTwoAtARandomEmptyLocation();
   };
@@ -205,6 +228,7 @@ class App extends Component {
       }
       colIndex += 1;
     }
+    this.checkForGameWon(gameState);
     this.setState({ gameState });
     this.putTwoAtARandomEmptyLocation();
   };
@@ -227,6 +251,7 @@ class App extends Component {
       }
       rowIndex += 1;
     }
+    this.checkForGameWon(gameState);
     this.setState({ gameState });
     this.putTwoAtARandomEmptyLocation();
   };
@@ -249,6 +274,7 @@ class App extends Component {
       }
       rowIndex += 1;
     }
+    this.checkForGameWon(gameState);
     this.setState({ gameState });
     this.putTwoAtARandomEmptyLocation();
   };
