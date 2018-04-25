@@ -9,61 +9,76 @@ class App extends Component {
       [0, 0, 0, 0],
       [0, 0, 0, 0],
       [0, 0, 0, 0]
-    ],
-    nonEmptyLocationArrows: []
+    ]
   };
 
   getRandomInt = max => Math.floor(Math.random() * Math.floor(max));
-
-  checkForGameOver = arrow => {
-    let { nonEmptyLocationArrows } = this.state;
-    const oldNonEmptyLocationArrows = nonEmptyLocationArrows;
-    nonEmptyLocationArrows = nonEmptyLocationArrows.filter(item => item !== arrow);
-    if (this.getEmptyLocations().length === 0) {
-      nonEmptyLocationArrows.push(arrow);
-    }
-    let gameReallyOver = false;
-    if (oldNonEmptyLocationArrows.length === 4 && nonEmptyLocationArrows.length === 4) {
+  
+  isGameOverOnColumns = () => {
+    const { gameState } = this.state;
+    let colIndex = 0;
+    const gameOverArray = [];
+    while (colIndex < 4) {
       let gameOver = true;
-      let i = 0;
-      while (i < 4) {
-        if (oldNonEmptyLocationArrows[i] === nonEmptyLocationArrows[i]) {
+      let rowIndex = 0;
+      while (rowIndex < 3) {
+        if (gameState[rowIndex][colIndex] === gameState[rowIndex + 1][colIndex]) {
           gameOver = false;
           break;
         }
-        i += 1;
+        rowIndex += 1;
       }
-      if (gameOver) {
-        gameReallyOver = true;
+      gameOverArray.push(gameOver);
+      colIndex += 1;
+    }
+    return gameOverArray[0] && gameOverArray[1] && gameOverArray[2] && gameOverArray[3];
+  };
+  
+  isGameOverOnRows = () => {
+    const { gameState } = this.state;
+    let rowIndex = 0;
+    const gameOverArray = [];
+    while (rowIndex < 4) {
+      let gameOver = true;
+      let colIndex = 0;
+      while (colIndex < 3) {
+        if (gameState[rowIndex][colIndex] === gameState[rowIndex][colIndex + 1]) {
+          gameOver = false;
+          break;
+        }
+        colIndex += 1;
+      }
+      gameOverArray.push(gameOver);
+      rowIndex += 1;
+    }
+    return gameOverArray[0] && gameOverArray[1] && gameOverArray[2] && gameOverArray[3];
+  };
+
+  checkForGameOver = () => {
+    if (this.getEmptyLocations().length === 0) {
+      if (this.isGameOverOnRows() && this.isGameOverOnColumns()) {
+        console.log('game over');
       }
     }
-    if (gameReallyOver) {
-      console.log('game over');
-    } else {
-      this.setState({
-        nonEmptyLocationArrows
-      });
-    }
-    console.log(nonEmptyLocationArrows);
   };
 
   handleMotion = (e) => {
     e.preventDefault();
     if (e.key === 'ArrowRight') {
       this.handleRightArrowClick();
-      this.checkForGameOver('right');
+      this.checkForGameOver();
     }
     if (e.key === 'ArrowLeft') {
       this.handleLeftArrowClick();
-      this.checkForGameOver('left');
+      this.checkForGameOver();
     }
     if (e.key === 'ArrowUp') {
       this.handleUpArrowClick();
-      this.checkForGameOver('up');
+      this.checkForGameOver();
     }
     if (e.key === 'ArrowDown') {
       this.handleDownArrowClick();
-      this.checkForGameOver('down');
+      this.checkForGameOver();
     }
   };
 
