@@ -25,6 +25,7 @@ class App extends Component {
     }
     if (e.key === 'ArrowUp') {
       console.log('^');
+      this.handleUpArrowClick();
     }
     if (e.key === 'ArrowDown') {
       console.log('v');
@@ -108,6 +109,28 @@ class App extends Component {
       while (rowIndex < 4) {
         gameState[rowIndex][colIndex] = newColArray[rowIndex];
         rowIndex += 1;
+      }
+      colIndex += 1;
+    }
+    this.setState({ gameState });
+    this.putTwoAtARandomEmptyLocation();
+  };
+
+  handleUpArrowClick = () => {
+    const { gameState } = this.state;
+    let colIndex = 0;
+    while (colIndex < 4) {
+      let rowIndex = 3;
+      const colArray = [];
+      while (rowIndex >= 0) {
+        colArray.push(gameState[rowIndex][colIndex]);
+        rowIndex -= 1;
+      }
+      const newColArray = this.performAddition(colArray);
+      rowIndex = 3;
+      while (rowIndex >= 0) {
+        gameState[rowIndex][colIndex] = newColArray[3 - rowIndex];
+        rowIndex -= 1;
       }
       colIndex += 1;
     }
