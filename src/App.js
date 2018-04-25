@@ -94,6 +94,23 @@ class App extends Component {
 
   handleDownArrowClick = () => {
     const { gameState } = this.state;
+    let colIndex = 0;
+    while (colIndex < 4) {
+      let rowIndex = 0;
+      const colArray = [];
+      while (rowIndex < 4) {
+        colArray.push(gameState[rowIndex][colIndex]);
+        rowIndex += 1;
+      }
+      const newColArray = this.performAddition(colArray);
+      rowIndex = 0;
+      while (rowIndex < 4) {
+        gameState[rowIndex][colIndex] = newColArray[rowIndex];
+        rowIndex += 1;
+      }
+      colIndex += 1;
+    }
+    this.setState({ gameState });
     this.putTwoAtARandomEmptyLocation();
   };
 
@@ -101,9 +118,6 @@ class App extends Component {
     window.addEventListener('keydown', this.handleMotion);
     this.mutateGameState(this.getRandomInt(4), this.getRandomInt(4), 2);
     this.mutateGameState(this.getRandomInt(4), this.getRandomInt(4), 2);
-    const array = [2,0,2,2];
-    console.log(array);
-    console.log(this.performAddition(array));
   }
 
   render() {
