@@ -10,38 +10,60 @@ class App extends Component {
       [0, 0, 0, 0],
       [0, 0, 0, 0]
     ],
-    nonEmptyLocationsCount: 0
+    nonEmptyLocationArrows: []
   };
 
   getRandomInt = max => Math.floor(Math.random() * Math.floor(max));
 
-  handleNonEmptyLocationsCount = () => {
+  checkForGameOver = arrow => {
+    let { nonEmptyLocationArrows } = this.state;
+    const oldNonEmptyLocationArrows = nonEmptyLocationArrows;
+    nonEmptyLocationArrows = nonEmptyLocationArrows.filter(item => item !== arrow);
     if (this.getEmptyLocations().length === 0) {
-      let { nonEmptyLocationsCount } = this.state;
-      nonEmptyLocationsCount += 1;
-      this.setState({
-        nonEmptyLocationsCount
-      })
+      nonEmptyLocationArrows.push(arrow);
     }
+    let gameReallyOver = false;
+    if (oldNonEmptyLocationArrows.length === 4 && nonEmptyLocationArrows.length === 4) {
+      let gameOver = true;
+      let i = 0;
+      while (i < 4) {
+        if (oldNonEmptyLocationArrows[i] === nonEmptyLocationArrows[i]) {
+          gameOver = false;
+          break;
+        }
+        i += 1;
+      }
+      if (gameOver) {
+        gameReallyOver = true;
+      }
+    }
+    if (gameReallyOver) {
+      console.log('game over');
+    } else {
+      this.setState({
+        nonEmptyLocationArrows
+      });
+    }
+    console.log(nonEmptyLocationArrows);
   };
 
   handleMotion = (e) => {
     e.preventDefault();
     if (e.key === 'ArrowRight') {
       this.handleRightArrowClick();
-      this.handleNonEmptyLocationsCount();
+      this.checkForGameOver('right');
     }
     if (e.key === 'ArrowLeft') {
       this.handleLeftArrowClick();
-      this.handleNonEmptyLocationsCount();
+      this.checkForGameOver('left');
     }
     if (e.key === 'ArrowUp') {
       this.handleUpArrowClick();
-      this.handleNonEmptyLocationsCount();
+      this.checkForGameOver('up');
     }
     if (e.key === 'ArrowDown') {
       this.handleDownArrowClick();
-      this.handleNonEmptyLocationsCount();
+      this.checkForGameOver('down');
     }
   };
 
