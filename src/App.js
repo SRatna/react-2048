@@ -58,13 +58,14 @@ class App extends Component {
 
   performAddition = array => {
     const reorderedArray = this.reorderItems(array);
-    const lastIndex = reorderedArray.length - 1;
-    const lastItem = reorderedArray[lastIndex];
-    const secondLastItem = reorderedArray[lastIndex - 1];
-    if (lastItem === secondLastItem) {
-      reorderedArray[lastIndex] = lastItem * 2;
-      reorderedArray[lastIndex - 1] = 0;
-      return this.reorderItems(reorderedArray);
+    let i = reorderedArray.length - 1;
+    while (i > 0) {
+      if (reorderedArray[i] === reorderedArray[i - 1]) {
+        reorderedArray[i] = reorderedArray[i] * 2;
+        reorderedArray[i - 1] = 0;
+        return this.reorderItems(reorderedArray);
+      }
+      i -= 1;
     }
     return reorderedArray;
   };
