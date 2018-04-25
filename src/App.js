@@ -40,10 +40,8 @@ class App extends Component {
   };
 
   reorderItems = array => {
-    console.log(array);
     let i = array.length;
     while (i > 0) {
-      console.log(i);
       i -= 1;
       if (array[i] > 0) continue;
       let j = i;
@@ -57,12 +55,26 @@ class App extends Component {
     return array;
   };
 
+  performAddition = array => {
+    const reorderedArray = this.reorderItems(array);
+    const lastIndex = reorderedArray.length - 1;
+    const lastItem = reorderedArray[lastIndex];
+    const secondLastItem = reorderedArray[lastIndex - 1];
+    if (lastItem === secondLastItem) {
+      reorderedArray[lastIndex] = lastItem * 2;
+      reorderedArray[lastIndex - 1] = 0;
+      return this.reorderItems(reorderedArray);
+    }
+    return reorderedArray;
+  };
+
   componentDidMount() {
     window.addEventListener('keydown', this.handleMotion);
     this.mutateGameState(this.getRandomInt(4), this.getRandomInt(4), 2);
     this.mutateGameState(this.getRandomInt(4), this.getRandomInt(4), 2);
-    const array = [0,0,2,4,0,2,0,0,8];
-    console.log(this.reorderItems(array));
+    const array = [2,0,2,2];
+    console.log(array);
+    console.log(this.performAddition(array));
   }
 
   render() {
