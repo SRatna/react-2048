@@ -18,10 +18,10 @@ class App extends Component {
     e.preventDefault();
     if (e.key === 'ArrowRight') {
       console.log('>');
+      this.handleRightArrowClick();
     }
     if (e.key === 'ArrowLeft') {
       console.log('<');
-
     }
     if (e.key === 'ArrowUp') {
       console.log('^');
@@ -133,6 +133,28 @@ class App extends Component {
         rowIndex -= 1;
       }
       colIndex += 1;
+    }
+    this.setState({ gameState });
+    this.putTwoAtARandomEmptyLocation();
+  };
+
+  handleRightArrowClick = () => {
+    const { gameState } = this.state;
+    let rowIndex = 0;
+    while (rowIndex < 4) {
+      let colIndex = 0;
+      const rowArray = [];
+      while (colIndex < 4) {
+        rowArray.push(gameState[rowIndex][colIndex]);
+        colIndex += 1;
+      }
+      const newRowArray = this.performAddition(rowArray);
+      colIndex = 0;
+      while (colIndex < 4) {
+        gameState[rowIndex][colIndex] = newRowArray[colIndex];
+        colIndex += 1;
+      }
+      rowIndex += 1;
     }
     this.setState({ gameState });
     this.putTwoAtARandomEmptyLocation();
