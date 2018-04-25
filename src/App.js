@@ -9,24 +9,39 @@ class App extends Component {
       [0, 0, 0, 0],
       [0, 0, 0, 0],
       [0, 0, 0, 0]
-    ]
+    ],
+    nonEmptyLocationsCount: 0
   };
 
   getRandomInt = max => Math.floor(Math.random() * Math.floor(max));
+
+  handleNonEmptyLocationsCount = () => {
+    if (this.getEmptyLocations().length === 0) {
+      let { nonEmptyLocationsCount } = this.state;
+      nonEmptyLocationsCount += 1;
+      this.setState({
+        nonEmptyLocationsCount
+      })
+    }
+  };
 
   handleMotion = (e) => {
     e.preventDefault();
     if (e.key === 'ArrowRight') {
       this.handleRightArrowClick();
+      this.handleNonEmptyLocationsCount();
     }
     if (e.key === 'ArrowLeft') {
       this.handleLeftArrowClick();
+      this.handleNonEmptyLocationsCount();
     }
     if (e.key === 'ArrowUp') {
       this.handleUpArrowClick();
+      this.handleNonEmptyLocationsCount();
     }
     if (e.key === 'ArrowDown') {
       this.handleDownArrowClick();
+      this.handleNonEmptyLocationsCount();
     }
   };
 
