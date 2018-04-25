@@ -68,7 +68,7 @@ class App extends Component {
     return reorderedArray;
   };
 
-  putTwoAtARandomEmptyLocation = () => {
+  getEmptyLocations = () => {
     const { gameState } = this.state;
     const emptyLocations = [];
     let rowIndex = 0;
@@ -84,6 +84,11 @@ class App extends Component {
       }
       rowIndex += 1;
     }
+    return emptyLocations;
+  };
+
+  putTwoAtARandomEmptyLocation = () => {
+    const emptyLocations = this.getEmptyLocations();
     if (emptyLocations.length > 0) {
       const randomIndex = this.getRandomInt(emptyLocations.length);
       const randomLocation = emptyLocations[randomIndex];
