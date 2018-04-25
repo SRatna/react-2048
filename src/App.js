@@ -10,7 +10,8 @@ class App extends Component {
       [0, 0, 0, 0],
       [0, 0, 0, 0]
     ],
-    gameOver: false
+    gameOver: false,
+    gameWon: false
   };
 
   getRandomInt = max => Math.floor(Math.random() * Math.floor(max));
@@ -251,7 +252,7 @@ class App extends Component {
   }
 
   render() {
-    const { gameState } = this.state;
+    const { gameState, gameOver, gameWon } = this.state;
     return (
       <div>
         <div className="header">
@@ -265,6 +266,12 @@ class App extends Component {
               </span>
             ))
           })}
+        </div>
+        <div className="footer">
+          {gameOver && <span>Game Over</span>}
+          {gameWon && <span>Game Won</span>}
+          <br/>
+          <button>New Game</button>
         </div>
       </div>
     );
