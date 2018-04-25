@@ -28,6 +28,7 @@ class App extends Component {
     }
     if (e.key === 'ArrowDown') {
       console.log('v');
+      this.handleDownArrowClick();
     }
   };
 
@@ -66,6 +67,34 @@ class App extends Component {
       return this.reorderItems(reorderedArray);
     }
     return reorderedArray;
+  };
+
+  putTwoAtARandomEmptyLocation = () => {
+    const { gameState } = this.state;
+    const emptyLocations = [];
+    let rowIndex = 0;
+    while (rowIndex < 4) {
+      let colIndex = 0;
+      while (colIndex < 4) {
+        if (gameState[rowIndex][colIndex] === 0) {
+          emptyLocations.push({
+            rowIndex, colIndex
+          });
+        }
+        colIndex += 1;
+      }
+      rowIndex += 1;
+    }
+    if (emptyLocations.length > 0) {
+      const randomIndex = this.getRandomInt(emptyLocations.length);
+      const randomLocation = emptyLocations[randomIndex];
+      this.mutateGameState(randomLocation.rowIndex, randomLocation.colIndex, 2);
+    }
+  };
+
+  handleDownArrowClick = () => {
+    const { gameState } = this.state;
+    this.putTwoAtARandomEmptyLocation();
   };
 
   componentDidMount() {
