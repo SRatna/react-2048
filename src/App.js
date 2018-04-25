@@ -39,10 +39,30 @@ class App extends Component {
     })
   };
 
+  reorderItems = array => {
+    console.log(array);
+    let i = array.length;
+    while (i > 0) {
+      console.log(i);
+      i -= 1;
+      if (array[i] > 0) continue;
+      let j = i;
+      while (j > 0) {
+        j -= 1;
+        if (array[j] > 0) break;
+      }
+      array[i] = array[j];
+      array[j] = 0;
+    }
+    return array;
+  };
+
   componentDidMount() {
     window.addEventListener('keydown', this.handleMotion);
     this.mutateGameState(this.getRandomInt(4), this.getRandomInt(4), 2);
     this.mutateGameState(this.getRandomInt(4), this.getRandomInt(4), 2);
+    const array = [0,0,2,4,0,2,0,0,8];
+    console.log(this.reorderItems(array));
   }
 
   render() {
