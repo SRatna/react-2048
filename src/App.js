@@ -17,18 +17,15 @@ class App extends Component {
   handleMotion = (e) => {
     e.preventDefault();
     if (e.key === 'ArrowRight') {
-      console.log('>');
       this.handleRightArrowClick();
     }
     if (e.key === 'ArrowLeft') {
-      console.log('<');
+      this.handleLeftArrowClick();
     }
     if (e.key === 'ArrowUp') {
-      console.log('^');
       this.handleUpArrowClick();
     }
     if (e.key === 'ArrowDown') {
-      console.log('v');
       this.handleDownArrowClick();
     }
   };
@@ -153,6 +150,28 @@ class App extends Component {
       while (colIndex < 4) {
         gameState[rowIndex][colIndex] = newRowArray[colIndex];
         colIndex += 1;
+      }
+      rowIndex += 1;
+    }
+    this.setState({ gameState });
+    this.putTwoAtARandomEmptyLocation();
+  };
+
+  handleLeftArrowClick = () => {
+    const { gameState } = this.state;
+    let rowIndex = 0;
+    while (rowIndex < 4) {
+      let colIndex = 3;
+      const rowArray = [];
+      while (colIndex >= 0) {
+        rowArray.push(gameState[rowIndex][colIndex]);
+        colIndex -= 1;
+      }
+      const newRowArray = this.performAddition(rowArray);
+      colIndex = 3;
+      while (colIndex >= 0) {
+        gameState[rowIndex][colIndex] = newRowArray[3 - colIndex];
+        colIndex -= 1;
       }
       rowIndex += 1;
     }
