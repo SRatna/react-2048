@@ -335,9 +335,9 @@ class App extends Component {
               <span
                 style={{
                   backgroundColor: `rgb(
-                    ${210 - Math.floor(Math.sqrt(gameState[i][j]) * 7)},
-                    ${210 - Math.floor(Math.sqrt(gameState[i][j]) * 7)},
-                    ${210 - Math.floor(Math.sqrt(gameState[i][j]) * 7)})`
+                    ${220 - Math.floor(Math.sqrt(gameState[i][j]) * 10)},
+                    ${220 - Math.floor(Math.sqrt(gameState[i][j]) * 10)},
+                    ${220 - Math.floor(Math.sqrt(gameState[i][j]) * 10)})`
                 }}
                 key={j}>
                 {gameState[i][j] > 0 ? gameState[i][j] : ''}
