@@ -355,6 +355,10 @@ class App extends Component {
           <button onClick={this.resetGame}>
             New Game
           </button>
+          <p>
+            <b>HOW TO PLAY</b>: Use your <b>arrow keys</b> to move the tiles.
+            When two tiles with the same number touch, they <b>merge into one!</b>
+          </p>
         </div>
       </div>
     );

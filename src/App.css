@@ -29,17 +29,23 @@
     font-size: 25px;
 }
 .footer {
+    width: 335px;
+    margin: auto;
+    color: #776e65;
     text-align: center;
 }
 .footer > span {
     padding: 10px;
-    border: 3px solid #818181;
+    border: 3px solid #776e65;
     display: inline-block;
     margin: 5px;
+    font-size: 3em;
 }
 .footer > button {
+    color: #776e65;
+    font-size: 1.4em;
     padding: 10px;
-    border: 3px solid #818181;
+    border: 3px solid #776e65;
     background-color: white;
     outline: none;
     cursor: pointer;
@@ -47,5 +53,11 @@
 }
 .footer > button:hover {
     color: white;
-    background-color: #818181;
+    background-color: #776e65;
+}
+.footer > p {
+    text-align: justify;
+    border-top: 1px solid rgb(205, 193, 181);
+    border-bottom: 1px solid rgb(205, 193, 181);
+    padding: 10px 0;
 }
