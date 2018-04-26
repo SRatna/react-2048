@@ -328,7 +328,12 @@ class App extends Component {
     return (
       <div>
         <div className="header">
-          2048 Game
+          <h1>
+            2048
+          </h1>
+          <span>
+            Join the numbers and get to the <b>2048</b> tile!
+          </span>
         </div>
         <div className="playground">
           {[0, 1, 2, 3].map(i => {

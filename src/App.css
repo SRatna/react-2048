@@ -1,8 +1,14 @@
 .header {
-    text-align: center;
-    padding: 10px;
-    background-color: #818181;
-    color: #ffffff;
+    width: 335px;
+    margin: 30px auto 0;
+    color: #776e65;
+}
+.header > h1 {
+    margin: 0;
+    font-size: 3.5em;
+}
+.header > span {
+    font-size: 1.1em;
 }
 .playground {
     display: grid;
