@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
-
   state = {
     gameState: [
       [0, 0, 0, 0],
@@ -106,14 +105,9 @@ class App extends Component {
     }
   };
 
-  mutateGameState = (i, j, value) => {
-    this.setState(prevState => {
-      const prevGameState = prevState.gameState;
-      prevGameState[i][j] = value;
-      return {
-        gameState: prevGameState
-      };
-    })
+  mutateGameState = (gameState, i, j, value) => {
+    gameState[i][j] = value;
+    this.setState({ gameState });
   };
 
   reorderItems = array => {
@@ -164,16 +158,16 @@ class App extends Component {
     return emptyLocations;
   };
 
-  putTwoAtARandomEmptyLocation = () => {
-    const emptyLocations = this.getEmptyLocations(this.state.gameState);
+  putTwoAtARandomEmptyLocation = gameState => {
+    const emptyLocations = this.getEmptyLocations(gameState);
     if (emptyLocations.length > 0) {
       const randomIndex = this.getRandomInt(emptyLocations.length);
       const randomLocation = emptyLocations[randomIndex];
-      this.mutateGameState(randomLocation.rowIndex, randomLocation.colIndex, 2);
+      this.mutateGameState(gameState, randomLocation.rowIndex, randomLocation.colIndex, 2);
     }
   };
 
-  putTwoAtTwoRandomEmptyLocations = () => {
+  putTwoAtTwoRandomEmptyLocations = gameState => {
     const i1 = this.getRandomInt(4);
     const j1 = this.getRandomInt(4);
     let i2 = this.getRandomInt(4);
@@ -183,12 +177,32 @@ class App extends Component {
       i2 = this.getRandomInt(4);
       j2 = this.getRandomInt(4);
     }
-    this.mutateGameState(i1, j1, 2);
-    this.mutateGameState(i2, j2, 2);
+    this.mutateGameState(gameState, i1, j1, 2);
+    this.mutateGameState(gameState, i2, j2, 2);
+  };
+
+  hasGameStateChanged = newGameState => {
+    const { gameState } = this.state;
+    let rowIndex = 0;
+    let gameStateChanged = false;
+    while (rowIndex < 4) {
+      let colIndex = 0;
+      while (colIndex < 4) {
+        if (newGameState[rowIndex][colIndex] !== gameState[rowIndex][colIndex]) {
+          gameStateChanged = true;
+          break;
+        }
+        colIndex += 1;
+      }
+      if (gameStateChanged) break;
+      rowIndex += 1;
+    }
+    return gameStateChanged;
   };
 
   handleDownArrowClick = () => {
     const { gameState } = this.state;
+    const newGameState = [[],[],[],[]];
     let colIndex = 0;
     while (colIndex < 4) {
       let rowIndex = 0;
@@ -200,18 +214,20 @@ class App extends Component {
       const newColArray = this.performAddition(colArray);
       rowIndex = 0;
       while (rowIndex < 4) {
-        gameState[rowIndex][colIndex] = newColArray[rowIndex];
+        newGameState[rowIndex][colIndex] = newColArray[rowIndex];
         rowIndex += 1;
       }
       colIndex += 1;
     }
-    this.checkForGameWon(gameState);
-    this.setState({ gameState });
-    this.putTwoAtARandomEmptyLocation();
+    this.checkForGameWon(newGameState);
+    if (this.hasGameStateChanged(newGameState)) {
+      this.putTwoAtARandomEmptyLocation(newGameState);
+    }
   };
 
   handleUpArrowClick = () => {
     const { gameState } = this.state;
+    const newGameState = [[],[],[],[]];
     let colIndex = 0;
     while (colIndex < 4) {
       let rowIndex = 3;
@@ -223,18 +239,20 @@ class App extends Component {
       const newColArray = this.performAddition(colArray);
       rowIndex = 3;
       while (rowIndex >= 0) {
-        gameState[rowIndex][colIndex] = newColArray[3 - rowIndex];
+        newGameState[rowIndex][colIndex] = newColArray[3 - rowIndex];
         rowIndex -= 1;
       }
       colIndex += 1;
     }
-    this.checkForGameWon(gameState);
-    this.setState({ gameState });
-    this.putTwoAtARandomEmptyLocation();
+    this.checkForGameWon(newGameState);
+    if (this.hasGameStateChanged(newGameState)) {
+      this.putTwoAtARandomEmptyLocation(newGameState);
+    }
   };
 
   handleRightArrowClick = () => {
     const { gameState } = this.state;
+    const newGameState = [[],[],[],[]];
     let rowIndex = 0;
     while (rowIndex < 4) {
       let colIndex = 0;
@@ -246,18 +264,20 @@ class App extends Component {
       const newRowArray = this.performAddition(rowArray);
       colIndex = 0;
       while (colIndex < 4) {
-        gameState[rowIndex][colIndex] = newRowArray[colIndex];
+        newGameState[rowIndex][colIndex] = newRowArray[colIndex];
         colIndex += 1;
       }
       rowIndex += 1;
     }
-    this.checkForGameWon(gameState);
-    this.setState({ gameState });
-    this.putTwoAtARandomEmptyLocation();
+    this.checkForGameWon(newGameState);
+    if (this.hasGameStateChanged(newGameState)) {
+      this.putTwoAtARandomEmptyLocation(newGameState);
+    }
   };
 
   handleLeftArrowClick = () => {
     const { gameState } = this.state;
+    const newGameState = [[],[],[],[]];
     let rowIndex = 0;
     while (rowIndex < 4) {
       let colIndex = 3;
@@ -269,18 +289,19 @@ class App extends Component {
       const newRowArray = this.performAddition(rowArray);
       colIndex = 3;
       while (colIndex >= 0) {
-        gameState[rowIndex][colIndex] = newRowArray[3 - colIndex];
+        newGameState[rowIndex][colIndex] = newRowArray[3 - colIndex];
         colIndex -= 1;
       }
       rowIndex += 1;
     }
-    this.checkForGameWon(gameState);
-    this.setState({ gameState });
-    this.putTwoAtARandomEmptyLocation();
+    this.checkForGameWon(newGameState);
+    if (this.hasGameStateChanged(newGameState)) {
+      this.putTwoAtARandomEmptyLocation(newGameState);
+    }
   };
 
   resetGame = () => {
-    this.setState({
+    const initialState = {
       gameState: [
         [0, 0, 0, 0],
         [0, 0, 0, 0],
@@ -289,13 +310,16 @@ class App extends Component {
       ],
       gameOver: false,
       gameWon: false
+    };
+    this.setState({
+      ...initialState
     });
-    this.putTwoAtTwoRandomEmptyLocations();
+    this.putTwoAtTwoRandomEmptyLocations(initialState.gameState);
   };
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleMotion);
-    this.putTwoAtTwoRandomEmptyLocations();
+    this.putTwoAtTwoRandomEmptyLocations(this.state.gameState);
   }
 
   render() {
