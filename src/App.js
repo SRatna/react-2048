@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import getColor from './getColor';
 import './App.css';
 
 class App extends Component {
@@ -334,10 +335,7 @@ class App extends Component {
             return [0, 1, 2, 3].map(j => (
               <span
                 style={{
-                  backgroundColor: `rgb(
-                    ${220 - Math.floor(Math.sqrt(gameState[i][j]) * 10)},
-                    ${220 - Math.floor(Math.sqrt(gameState[i][j]) * 10)},
-                    ${220 - Math.floor(Math.sqrt(gameState[i][j]) * 10)})`
+                  backgroundColor: getColor(gameState[i][j])
                 }}
                 key={j}>
                 {gameState[i][j] > 0 ? gameState[i][j] : ''}
