@@ -308,7 +308,14 @@ class App extends Component {
         <div className="playground">
           {[0, 1, 2, 3].map(i => {
             return [0, 1, 2, 3].map(j => (
-              <span key={j}>
+              <span
+                style={{
+                  backgroundColor: `rgb(
+                    ${210 - Math.floor(Math.sqrt(gameState[i][j]) * 7)},
+                    ${210 - Math.floor(Math.sqrt(gameState[i][j]) * 7)},
+                    ${210 - Math.floor(Math.sqrt(gameState[i][j]) * 7)})`
+                }}
+                key={j}>
                 {gameState[i][j] > 0 ? gameState[i][j] : ''}
               </span>
             ))
