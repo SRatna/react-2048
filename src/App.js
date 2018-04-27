@@ -340,8 +340,7 @@ class App extends Component {
             return [0, 1, 2, 3].map(j => (
               <span
                 style={{
-                  backgroundColor: getColor(gameState[i][j]),
-                  boxShadow: `0px 0px 1px 0px ${getColor(gameState[i][j])}`
+                  backgroundColor: getColor(gameState[i][j])
                 }}
                 key={j}>
                 {gameState[i][j] > 0 ? gameState[i][j] : ''}
